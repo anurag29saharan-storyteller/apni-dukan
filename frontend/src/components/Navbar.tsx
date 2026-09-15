@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { ShoppingCart, Search, User, Menu, X, LogOut, Package, Shield, Home as HomeIcon } from "lucide-react";
+import { ShoppingCart, Search, Menu, X, LogOut, Package, Shield, Home as HomeIcon } from "lucide-react";
 import { logout } from "../api";
 import { useCurrentUser } from "../useCurrentUser";
 import { useCart } from "../context/CartContext";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingBag, Mail, Lock, AlertCircle, Check } from "lucide-react";
+import { Mail, Lock, AlertCircle, Check } from "lucide-react";
 import { register } from "../api";
 import { useDocumentTitle } from "../useDocumentTitle";
 
