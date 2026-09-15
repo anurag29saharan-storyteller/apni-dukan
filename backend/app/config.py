@@ -1,3 +1,4 @@
+from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 from pydantic_settings import BaseSettings
 
 
@@ -11,9 +12,26 @@ class Settings(BaseSettings):
     @property
     def database_url_async(self) -> str:
         url = self.database_url
+
+        # Ensure asyncpg driver
         if url.startswith("postgresql://"):
             url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
-        return url
+
+        parsed = urlparse(url)
+        if not parsed.query:
+            return url
+
+        params = parse_qs(parsed.query)
+
+        # asyncpg uses `ssl` not `sslmode`
+        if "sslmode" in params:
+            params["ssl"] = params.pop("sslmode")
+
+        # asyncpg doesn't support channel_binding
+        params.pop("channel_binding", None)
+
+        new_query = urlencode(params, doseq=True)
+        return urlunparse(parsed._replace(query=new_query))
 
     @property
     def cors_origin_list(self) -> list[str]:
